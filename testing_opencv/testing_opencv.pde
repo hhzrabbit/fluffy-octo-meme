@@ -47,7 +47,7 @@ void mouseClicked() {
     opencv = new OpenCV(this, src);
 
     opencv.blur(1);
-    opencv.threshold(100);
+    opencv.threshold(170);
 
     contour = opencv.findContours(false, true).get(0).getPolygonApproximation();
 
