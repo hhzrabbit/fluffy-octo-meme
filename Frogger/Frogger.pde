@@ -17,7 +17,10 @@ void draw() {
   for (Obstacle o : obs) {
     o.move();
     o.display();
-    if (o.touchingFrog(player)) noLoop();
+    if (o.touchingFrog(player)) {
+      died();
+      break;
+    }
   }
 }
 
@@ -30,4 +33,12 @@ void keyPressed() {
     player.move("LEFT");
   else if (keyCode == RIGHT)
     player.move("RIGHT");
+}
+
+void died(){
+ player.loseLife();
+ if (player.lives <= 0)
+   noLoop();
+ else
+   player.moveToStart();
 }

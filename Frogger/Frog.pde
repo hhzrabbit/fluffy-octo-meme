@@ -25,5 +25,14 @@ class Frog extends Mover {
       changeIfPossible(_position.x - _width, _position.y);
     else if (dir.equals("RIGHT"))
       changeIfPossible(_position.x + _width, _position.y);
-  }
+ }
+ 
+ void loseLife(){
+  lives--; 
+ }
+ 
+ void moveToStart(){
+  _position.set(width / 2, height - _height); 
+ }
+ 
 }
