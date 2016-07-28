@@ -7,9 +7,7 @@ void setup() {
   drawGrid();
   player = new Frog();
   obs = new ArrayList<Obstacle>();
-  for (int i = 0; i < 10; i++) {
-    obs.add(new Obstacle(100, 30 + i * 30, 30, 30, 1));
-  }
+  
 }
 
 void draw() {
