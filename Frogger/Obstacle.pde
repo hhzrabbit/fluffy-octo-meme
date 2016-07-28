@@ -2,11 +2,11 @@ class Obstacle extends Mover {
 
   PVector _velocity;
 
-  Obstacle(float x, float y, int width, int height, int dir) {
+  Obstacle(float x, float y, int width, int height, float vel) {
     _width = width;
     _height = height;
     _position = new PVector(x, y);
-    _velocity = new PVector(dir, 0);
+    _velocity = new PVector(vel, 0);
     b = 255;
   }
 
