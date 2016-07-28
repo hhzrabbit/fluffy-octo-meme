@@ -1,27 +1,38 @@
 Frog player;
-Obstacle[] obs;
+ArrayList<Obstacle> obs;
 
 void setup() {
-  size(600, 600);
+  size(570, 600);
   background(50, 200, 200);
+  drawGrid();
   player = new Frog();
-  obs = new Obstacle[10];
-  for (int i = 0; i < obs.length; i++) {
-    obs[i] = new Obstacle(100, 30 + i * 30, 30, 30, 1);
+  obs = new ArrayList<Obstacle>();
+  for (int i = 0; i < 10; i++) {
+    obs.add(new Obstacle(100, 30 + i * 30, 30, 30, 1));
   }
 }
 
 void draw() {
   background(50, 200, 200);
-  player.display();
+  drawGrid();
   for (Obstacle o : obs) {
     o.move();
     o.display();
+  }
+  player.display();
+  for (Obstacle o : obs) {
     if (o.touchingFrog(player)) {
       died();
       break;
     }
   }
+}
+
+void drawGrid(){
+   for (int i = 0; i < max(width, height); i+=30){
+     line(i, 0, i, height); 
+     line(0, i, width, i);
+  } 
 }
 
 void keyPressed() {
@@ -35,10 +46,17 @@ void keyPressed() {
     player.move("RIGHT");
 }
 
-void died(){
- player.loseLife();
- if (player.lives <= 0)
-   noLoop();
- else
-   player.moveToStart();
+void died() {
+  noLoop();
+  player.loseLife();
+  if (player.lives <= 0)
+    noLoop();
+  else {
+    int waitTime = 0;
+    while (waitTime < Integer.MAX_VALUE) {
+      waitTime += 1;
+    }
+    loop();
+    player.moveToStart();
+  }
 }
