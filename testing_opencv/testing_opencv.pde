@@ -30,7 +30,7 @@ int cardHeight = 400;
 int min_x, min_y, max_x, max_y;
 
 //maze (to be exported as text file to feed into maze solver)
-String[][] maze;
+char[][] maze;
 
 //progress variables (used to determine what step of the process we are at)
 boolean detected;
@@ -89,8 +89,6 @@ void draw() {
 
 
 
-
-
 //=================================== STEP 1 ================================
 //get image from webcam, use OpenCV to detect edges, translate into Stirng matrix
 void keyPressed() {
@@ -139,10 +137,10 @@ void keyPressed() {
 
 
     Polygon p = new Polygon(xpoints, ypoints, xpoints.length);
-    maze = new String[max_x - min_x][max_y - min_y];
+    maze = new char[max_x - min_x][max_y - min_y];
     for (int i = 0; i < cam.pixels.length; i++) {
       if (get_x(i) > min_x && get_x(i) < max_x && get_y(i) < max_y && get_y(i) > min_y) {
-        maze[get_x(i) - min_x][get_y(i) - min_y] = "#";
+        maze[get_x(i) - min_x][get_y(i) - min_y] = '#';
       }
       if (p.contains(get_x(i), get_y(i))) {
         color c = color(cam.pixels[i]);
@@ -151,9 +149,9 @@ void keyPressed() {
         float b = blue(c);
         float avg = (r + g + b) / 3;
         if (avg > 100) {
-          maze[get_x(i) - min_x][get_y(i) - min_y] = " ";
+          maze[get_x(i) - min_x][get_y(i) - min_y] = ' ';
         } else {
-          maze[get_x(i) - min_x][get_y(i) - min_y] = "#";
+          maze[get_x(i) - min_x][get_y(i) - min_y] = '#';
         }
       }
     }
@@ -217,9 +215,9 @@ void mouseClicked() {
     int ycor = (int) mouseY;
     if (xcor >= min_x && xcor <= max_x && ycor >= min_y && ycor <= max_y) {
       if (mode == 1) {
-        maze[xcor - min_x][ycor - min_y] = "S";
+        maze[xcor - min_x][ycor - min_y] = 'S';
       } else if (mode == 2) {
-        maze[xcor - min_x][ycor - min_y] = "E";
+        maze[xcor - min_x][ycor - min_y] = 'E';
         endSelected = true;
       }
       mode = ++mode % 3;
