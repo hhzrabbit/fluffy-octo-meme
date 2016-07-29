@@ -29,9 +29,8 @@ int cardWidth = 400;
 int cardHeight = 400;
 int min_x, min_y, max_x, max_y;
 
-//maze properties
+//maze (to be exported as text file to feed into maze solver)
 String[][] maze;
-int start_x, start_y, end_x, end_y;
 
 //progress variables (used to determine what step of the process we are at)
 boolean detected;
@@ -218,11 +217,9 @@ void mouseClicked() {
     int ycor = (int) mouseY;
     if (xcor >= min_x && xcor <= max_x && ycor >= min_y && ycor <= max_y) {
       if (mode == 1) {
-        start_x = xcor;
-        start_y = ycor;
+        maze[xcor - min_x][ycor - min_y] = "S";
       } else if (mode == 2) {
-        end_x = xcor;
-        end_y = ycor;
+        maze[xcor - min_x][ycor - min_y] = "E";
         endSelected = true;
       }
       mode = ++mode % 3;
