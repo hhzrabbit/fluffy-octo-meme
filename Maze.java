@@ -123,9 +123,8 @@ class MazeSolver {
     }
 
     public boolean visitable(int r, int c){
-	boolean thisIsVisitable =  inBounds(r, c) && maze[r][c] != WALL && maze[r][c] != VISITED_PATH;
-	boolean thisIsNextToWall = nextToWall(r, c);
-	return thisIsVisitable && thisIsNextToWall;
+	 return inBounds(r, c) && maze[r][c] != WALL && maze[r][c] != VISITED_PATH;
+
     }
 
     public boolean nextToWall(int r, int c){

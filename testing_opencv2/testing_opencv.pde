@@ -36,7 +36,6 @@ char[][] maze;
 boolean detected;
 int mode;
 boolean endSelected;
-boolean solved;
 
 MazeSolver ms;
 //============================================================================
@@ -53,7 +52,6 @@ void setup() {
 
   detected = false;
   endSelected = false;
-  solved = false;
   
   
   webcam = true;
@@ -75,9 +73,7 @@ void draw() {
       cam.read();
     }
     image(cam, 0, 0);
-  } else if (solved) {
-      draw_solved_maze();
-  }else {
+  } else {
     draw_special();
   }
 
@@ -90,11 +86,9 @@ void draw() {
   }
 
   if (endSelected) {
-    ms.solveAStar();
-    colorPath();
+    ms.solve();
     exportToFile();
-    solved = true;
-    //noLoop();
+    noLoop();
   }
 }
 //===========================================================================
@@ -181,17 +175,15 @@ void keyPressed() {
 
 int get_x(int oneD) {
   int imageWidth = cam.width; 
+  int imageHeight = cam.height; 
+
   return oneD % imageWidth;
 }
-
 int get_y(int oneD) {
   int imageWidth = cam.width; 
-  return oneD / imageWidth;
-}
+  int imageHeight = cam.height; 
 
-int get_oneD(int x, int y){
- int imageWidth = cam.width;
- return y * imageWidth + x;
+  return oneD / imageWidth;
 }
 
 Mat getPerspectiveTransformation(ArrayList<PVector> inputPoints, int w, int h) {
@@ -235,7 +227,6 @@ void mouseClicked() {
         ms.setStart(xcor - min_x, ycor - min_y);
       } else if (mode == 2) {
         maze[xcor - min_x][ycor - min_y] = 'E';
-        ms.setEnd(xcor - min_x, ycor - min_y);
         endSelected = true;
       }
       mode = ++mode % 3;
@@ -245,25 +236,12 @@ void mouseClicked() {
 //=======================================================================
 
 
-//========================== STEP 3 =====================================
-//add color for the path
-void colorPath(){
-  println("vgoewhirenhoite");
- cam.loadPixels();
- for (int i = 0; i < maze.length; i++){
-   for (int j = 0; j < maze[0].length; j++){
-     if (maze[i][j] == 'P'){
-       cam.pixels[get_oneD(i + min_x, j + min_y)] = color(255, 0, 0);
-     }
-   }
- }
- cam.updatePixels();
-}
 
 
 //=========================== STEP 3 ====================================
 //export String matrix to text file 
 void exportToFile() {
+  println("ogirwjoerjbreb");
   try {
     PrintWriter out = createWriter("output.txt");
     for (int i = 1; i < maze.length; i++) {
@@ -282,10 +260,6 @@ void exportToFile() {
 
 
 
-
-void draw_solved_maze() {
-  image(cam, 0, 0);  
-}
 
 //================================ WHAT TO SHOW THE USER =======================
 void draw_special() {
@@ -307,8 +281,6 @@ void draw_special() {
   pushMatrix(); 
   translate(src.width, 0); 
   image(card, 0, 0); 
-  println("hi");
-  image(cam, 0, 0);
   popMatrix();
 }
 //==========================================================================
